@@ -2,7 +2,7 @@
 
 # --- Comandos AWS (Terraform) ---
 
-aws-up:
+aws-up: lambda-build
 	mkdir -p edge_gateway/certs
 	cd terraform && terraform init && terraform apply -target=module.compute.aws_ecr_repository.api_repo -auto-approve
 	bash api/build_and_deploy.sh
@@ -10,6 +10,12 @@ aws-up:
 
 aws-down:
 	cd terraform && terraform destroy -auto-approve
+
+# --- Preparar Lambda con dependencias ---
+
+lambda-build:
+	pip install -r lambdas/s3_to_postgres/requirements.txt -t lambdas/s3_to_postgres/package/ --upgrade --quiet
+	cp lambdas/s3_to_postgres/lambda_function.py lambdas/s3_to_postgres/package/lambda_function.py
 
 # --- Build y Push de la imagen de la API ---
 
