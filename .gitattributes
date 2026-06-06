@@ -1,0 +1,11 @@
+# Fuerza saltos de línea LF (Linux) para scripts y archivos de texto
+# Evita problemas al clonar en Windows y ejecutar en Linux/Docker
+*.sh        text eol=lf
+Makefile    text eol=lf
+*.py        text eol=lf
+*.tf        text eol=lf
+*.yml       text eol=lf
+*.yaml      text eol=lf
+*.json      text eol=lf
+*.md        text eol=lf
+*.txt       text eol=lf
