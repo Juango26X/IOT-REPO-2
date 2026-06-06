@@ -1,4 +1,4 @@
-.PHONY: aws-up aws-down api-build local-up local-down logs clean
+.PHONY: aws-up aws-down api-build lambda-build local-up local-down logs clean
 
 # --- Comandos AWS (Terraform) ---
 

@@ -50,6 +50,10 @@ def lambda_handler(event, context):
         bucket = record['s3']['bucket']['name']
         key    = record['s3']['object']['key']
 
+        # S3 entrega la key URL-encoded en el evento (ej. year%3D2026 en vez de year=2026)
+        from urllib.parse import unquote_plus
+        key = unquote_plus(key)
+
         logger.info(f"Procesando objeto s3://{bucket}/{key}")
 
         # 1. Leer el JSON desde S3

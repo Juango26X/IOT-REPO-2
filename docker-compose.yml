@@ -40,17 +40,16 @@ services:
     restart: unless-stopped
 
   # Sensor de Oxígeno (nuevo tipo de sensor)
-  # Para la sustentación: descomentar este bloque y correr 'make local-up'
-  # sensor_oxygen_01:
-  #   build:
-  #     context: ./python_device
-  #     dockerfile: Dockerfile
-  #   container_name: sensor-oxygen-01
-  #   environment:
-  #     - MQTT_HOST=mosquitto
-  #     - CLIENT_ID=sensor-oxygen-01
-  #     - SENSOR_TYPE=oxygen
-  #     - INTERVAL=10
-  #   depends_on:
-  #     - mosquitto
-  #   restart: unless-stopped
+  sensor_oxygen_01:
+    build:
+      context: ./python_device
+      dockerfile: Dockerfile
+    container_name: sensor-oxygen-01
+    environment:
+      - MQTT_HOST=mosquitto
+      - CLIENT_ID=sensor-oxygen-01
+      - SENSOR_TYPE=oxygen
+      - INTERVAL=10
+    depends_on:
+      - mosquitto
+    restart: unless-stopped

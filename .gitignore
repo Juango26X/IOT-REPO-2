@@ -1,0 +1,27 @@
+# ── Certificados y credenciales IoT (NUNCA subir) ──────────────
+edge_gateway/certs/
+edge_gateway/mosquitto.conf
+
+# ── Terraform ───────────────────────────────────────────────────
+terraform/.terraform/
+terraform/.terraform.lock.hcl
+terraform/terraform.tfstate
+terraform/terraform.tfstate.backup
+terraform/terraform.tfvars
+terraform/**/*.zip
+
+# ── Dependencias Lambda (generadas con pip install) ─────────────
+lambdas/s3_to_postgres/package/
+
+# ── Python ──────────────────────────────────────────────────────
+__pycache__/
+*.pyc
+*.pyo
+.env
+venv/
+
+# ── Docker ──────────────────────────────────────────────────────
+.docker/
+
+# ── Credenciales AWS ────────────────────────────────────────────
+.aws/
