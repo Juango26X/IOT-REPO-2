@@ -1,18 +1,4 @@
-# ============================================================
-# MÓDULO COMPUTE
-# Contiene:
-#   1. Lambda S3 → PostgreSQL (histórico)
-#   2. Lambda Alerta (IoT Rule 3 → SQS)
-#   3. SQS Queue de alertas
-#   4. Lambda SQS → CloudWatch (log de urgencia)
-#   5. ECR + ECS (API FastAPI)
-# ============================================================
 
-# ──────────────────────────────────────────────────────────────
-# 1. LAMBDA: S3 → PostgreSQL (histórico)
-# Patrón igual al de 4_lambda_s3
-# El zip se prepara desde el Makefile antes de correr terraform apply
-# ──────────────────────────────────────────────────────────────
 
 data "archive_file" "s3_to_postgres_zip" {
   type        = "zip"

@@ -1,15 +1,5 @@
-# ============================================================
-# MÓDULO NETWORKING
-# Contiene:
-#   - VPC y Subnets por defecto
-#   - Security Group para el ALB
-#   - Security Group para las tareas ECS
-#   - Security Group para RDS
-#   - DB Subnet Group para RDS
-#   - Application Load Balancer + Target Group + Listener
-# ============================================================
 
-# VPC y Subnets por defecto (igual que en 9_ecs y 10_sqs)
+
 data "aws_vpc" "default" {
   default = true
 }

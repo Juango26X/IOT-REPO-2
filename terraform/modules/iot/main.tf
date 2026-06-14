@@ -85,9 +85,7 @@ resource "local_file" "root_ca" {
   filename = "${path.root}/../edge_gateway/certs/AmazonRootCA1.pem"
 }
 
-# Generar mosquitto.conf automáticamente inyectando el endpoint de AWS
-# Crea el archivo de configuración del broker local Mosquitto. Se usa un bloque heredoc (<<-EOT)
-# para definir el texto e interpolar dinámicamente el Endpoint ATS de AWS y el nombre del Thing.
+
 resource "local_file" "mosquitto_conf" {
   content  = <<-EOT
 # Configuración del servidor local Mosquitto
@@ -118,12 +116,8 @@ EOT
   filename = "${path.root}/../edge_gateway/mosquitto.conf"
 }
 
-# === REGLAS IOT ===
 
-# Regla de DynamoDB:
-# Actúa como un suscriptor interno en AWS IoT Core. Escucha todo lo que llega a 'lab/sensors/data'
-# (vía la sentencia SQL) y ejecuta la acción "dynamodbv2", la cual inserta o actualiza 
-# el ítem en la tabla de DynamoDB usando el LabRole para tener permisos de escritura.
+
 resource "aws_iot_topic_rule" "dynamodb_rule" {
   name        = "SensorDataToDynamoDB_${var.environment}"
   description = "Guarda los eventos de sensores en DynamoDB"
@@ -140,10 +134,6 @@ resource "aws_iot_topic_rule" "dynamodb_rule" {
 }
 
 # Regla de S3:
-# De forma paralela a la regla anterior, intercepta los mismos mensajes de 'lab/sensors/data'.
-# En lugar de base de datos, ejecuta la acción "s3", guardando el payload como un archivo JSON.
-# La llave (key) usa funciones de interpolación internas de AWS IoT ($${parse_time...}) para organizar los archivos 
-# en carpetas particionadas por año/mes/día directamente, optimizando futuras consultas analíticas (Athena).
 resource "aws_iot_topic_rule" "s3_rule" {
   name        = "SensorDataToS3_${var.environment}"
   description = "Guarda los eventos de sensores en S3 particionados por fecha"
@@ -159,8 +149,7 @@ resource "aws_iot_topic_rule" "s3_rule" {
 }
 
 # Regla 3: Alerta por temperatura > umbral
-# Evalúa SOLO mensajes de sensores de temperatura y dispara la Lambda de alerta
-# cuando el valor reportado supera el umbral configurado (default 35 °C).
+
 resource "aws_iot_topic_rule" "alert_rule" {
   name        = "SensorAlertRule_${var.environment}"
   description = "Dispara una alerta Lambda cuando la temperatura supera el umbral"

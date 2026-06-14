@@ -40,10 +40,7 @@ def ensure_table(conn):
 
 
 def lambda_handler(event, context):
-    """
-    Se activa con el trigger s3:ObjectCreated:* del bucket de sensores.
-    Lee el JSON del objeto recién creado y lo inserta en PostgreSQL (histórico).
-    """
+
     logger.info(f"Evento recibido: {json.dumps(event)}")
 
     for record in event.get('Records', []):
